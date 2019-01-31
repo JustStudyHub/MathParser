@@ -50,6 +50,7 @@ void Expression::Parse()
 	int bracketCoef = 1;
 	int bracketCount1 = 0;
 	int bracketCount2 = 0;
+	int reversNum = 1;
 	try
 	{
 		for (size_t i = 0; i < m_rest.length(); ++i)
@@ -64,18 +65,44 @@ void Expression::Parse()
 				bracketCoef /= 4;
 				++bracketCount2;
 				break;
-			case '+': case '-':case '*': case '/':case '^':
+			case '-':
+				if (!m_expr.back().m_isVal)
+				{
+					reversNum = -1;
+					break;
+				}
 				if (temp.length() != 0)
 				{
-					m_expr.push_back(Node(std::stod(temp)));
+					m_expr.push_back(Node(std::stod(temp)*reversNum));
+					reversNum = 1;
+					temp = "";
+				}
+				m_expr.push_back(Node(m_rest[i], bracketCoef));
+				break;
+			case '+': case '*': case '/':case '^':
+				if (!m_expr.back().m_isVal)
+				{
+					throw "Invalid Symbol!";
+					break;
+				}
+				if (temp.length() != 0)
+				{
+					m_expr.push_back(Node(std::stod(temp)*reversNum));
+					reversNum = 1;
 					temp = "";
 				}
 				m_expr.push_back(Node(m_rest[i], bracketCoef));
 				break;
 			case '=':
+				if (!m_expr.back().m_isVal)
+				{
+					throw "Invalid Symbol!";
+					break;
+				}
 				if (temp.length() != 0)
 				{
-					m_expr.push_back(Node(std::stod(temp)));
+					m_expr.push_back(Node(std::stod(temp) * reversNum));
+					reversNum = 1;
 					temp = "";
 				}
 				break;

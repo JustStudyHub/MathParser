@@ -19,6 +19,7 @@ namespace MathParserTest
 			std::string expr6("1-2*9=");
 			std::string expr7("1+9*6-4/3=");
 			std::string expr8("1+2-1/10*20+3^4*5+4+5+6+7*2=");
+
 			double resExpr1 = 1 + 2;
 			double resExpr2 = (double)1 / 9;
 			double resExpr3 = 1 - 400;
@@ -58,6 +59,7 @@ namespace MathParserTest
 			std::string expr6("(2^8)-5=");
 			std::string expr7("(1+9)*(6-4)/3=");
 			std::string expr8("1+(2-1)/10*(20-17)^(4*5)+(4+7)*2=");
+
 			double resExpr1 = 7 * (2 + 3);
 			double resExpr2 = (double)1 / (9 - 2);
 			double resExpr3 = 1 - ((double)400 / (20 + 20) - (double)40 / 5);

@@ -16,7 +16,7 @@ int main()
 			std::string expr5("7^8=");
 			std::string expr6("1-2*9=");
 			std::string expr7("1+9*6-4/3=");
-			std::string expr8("1+2-1/10*20+3^4*5+4+5+6+7*2=");
+			std::string expr8("1+2-1/10*(-20)+3^4*5+4+5+6+7*2=");
 			double resExpr1 = 1 + 2;
 			double resExpr2 = (double)1 / 9;
 			double resExpr3 = 1 - 400;
@@ -24,7 +24,7 @@ int main()
 			double resExpr5 = pow(7, 8);
 			double resExpr6 = 1 - 2 * 9;
 			double resExpr7 = 1 + 9 * 6 - (double)4 / 3;
-			double resExpr8 = 1 + 2 - (double)1 / 10 * 20 + pow(3, 4) * 5 + 4 + 5 + 6 + 7 * 2;
+			double resExpr8 = 1 + 2 - (double)1 / 10 * (-20) + pow(3, 4) * 5 + 4 + 5 + 6 + 7 * 2;
 
 			Expression testExpr1(expr1);
 			Expression testExpr2(expr2);
