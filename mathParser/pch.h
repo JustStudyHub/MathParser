@@ -13,4 +13,6 @@
 #include <iostream>
 #include <string>
 #include <vector>
+#include <cassert>
+
 #endif //PCH_H
