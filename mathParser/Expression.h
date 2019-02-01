@@ -25,5 +25,5 @@ private:
 	std::string m_rest;
 	void Parse();
 	double CalcOper(char oper, double a, double b);
-
+	//bool IsExpressionCorrect();
 };

@@ -44,6 +44,8 @@ Expression::Node::Node(char oper, int weightCoef)
 	this->m_rVal = nullptr;
 }
 
+
+
 void Expression::Parse()
 {
 	std::string temp = "";
@@ -51,91 +53,79 @@ void Expression::Parse()
 	int bracketCount1 = 0;
 	int bracketCount2 = 0;
 	int reversNum = 1;
-	try
+	for (size_t i = 0; i < m_rest.length(); ++i)
 	{
-		for (size_t i = 0; i < m_rest.length(); ++i)
+		switch (m_rest[i])
 		{
-			switch (m_rest[i])
-			{
-			case '(':
-				bracketCoef *= 4;
-				++bracketCount1;
-				break;
+		case '(':
+			bracketCoef *= 4;
+			++bracketCount1;
+			break;
 
-			case ')':
-				if (m_expr.size() == 0)
-				{
-					throw "Invalid Symbol!";
-					break;
-				}/*
-				if (!m_expr.back().m_isVal)
-				{
-					throw "Invalid Symbol!";
-					break;
-				}*/
-				bracketCoef /= 4;
-				++bracketCount2;
-				break;
-			case '-':				
-				if (temp.length() != 0)
-				{
-					m_expr.push_back(Node(std::stod(temp)*reversNum));
-					reversNum = 1;
-					temp = "";
-				}
-				if (!m_expr.back().m_isVal)
-				{
-					reversNum = -1;
-					break;
-				}
-				m_expr.push_back(Node(m_rest[i], bracketCoef));
-				break;
-			case '+': case '*': case '/':case '^':				
-				if (temp.length() != 0)
-				{
-					m_expr.push_back(Node(std::stod(temp)*reversNum));
-					reversNum = 1;
-					temp = "";
-				}
-				if (!m_expr.back().m_isVal)
-				{
-					throw "Invalid Symbol!";
-					break;
-				}
-				m_expr.push_back(Node(m_rest[i], bracketCoef));
-				break;
-			case '=':
-				if (temp.length() != 0)
-				{
-					m_expr.push_back(Node(std::stod(temp) * reversNum));
-					reversNum = 1;
-					temp = "";
-				}
-				if (!m_expr.back().m_isVal)
-				{
-					throw "Invalid Symbol!";
-					break;
-				}
-				break;
-			case '1': case '2': case '3': case '4': case '5': case '6':
-			case '7': case '8': case '9': case '0': case '.':
-				temp += m_rest[i];
-				break;
-			case ' ':
-				break;
-			default:
-				throw "Invalid Symbol!";
+		case ')':
+			if (m_expr.size() == 0)
+			{
+				throw std::invalid_argument("Invalid syntax.");
 				break;
 			}
-		}
-		if (bracketCount1 != bracketCount2)
-		{
-			throw "Invalid bracket!";
+			bracketCoef /= 4;
+			++bracketCount2;
+			break;
+		case '-':
+			if (temp.length() != 0)
+			{
+				m_expr.push_back(Node(std::stod(temp)*reversNum));
+				reversNum = 1;
+				temp = "";
+			}
+			if (!m_expr.back().m_isVal)
+			{
+				reversNum = -1;
+				break;
+			}
+			m_expr.push_back(Node(m_rest[i], bracketCoef));
+			break;
+		case '+': case '*': case '/':case '^':
+			if (temp.length() != 0)
+			{
+				m_expr.push_back(Node(std::stod(temp)*reversNum));
+				reversNum = 1;
+				temp = "";
+			}
+			if (!m_expr.back().m_isVal)
+			{
+				throw std::invalid_argument("Invalid syntax.");
+				break;
+			}
+			m_expr.push_back(Node(m_rest[i], bracketCoef));
+			break;
+		case '=':
+			if (temp.length() != 0)
+			{
+				m_expr.push_back(Node(std::stod(temp) * reversNum));
+				reversNum = 1;
+				temp = "";
+			}
+			if (!m_expr.back().m_isVal)
+			{
+				throw std::invalid_argument("Invalid syntax.");
+				break;
+			}
+			break;
+		case '1': case '2': case '3': case '4': case '5': case '6':
+		case '7': case '8': case '9': case '0': case '.':
+			temp += m_rest[i];
+			break;
+		case ' ':
+			break;
+		default:
+			throw std::invalid_argument("Invalid syntax.");
+			break;
 		}
 	}
-	catch (...)
+	if (bracketCount1 != bracketCount2)
 	{
-		std::cout << "Invalid Input";
+		throw std::invalid_argument("Invalid braket");
 	}
 	for (size_t i = 1; i < m_expr.size() - 1; i++)
 	{
@@ -206,7 +196,7 @@ double Expression::CalcOper(char oper, double a, double b)
 		{
 			if (zero == 0)
 			{
-				std::cout << "Division by zero!";
+				throw std::domain_error("Division by zero.");
 				return 0;
 			}
 		}
