@@ -9,7 +9,7 @@ using namespace std;
 
 int main()
 {
-	std::string expr1("1+2=");
+	std::string expr1("1+(-2)=");
 			std::string expr2("1/9=");
 			std::string expr3("1-400=");
 			std::string expr4("1*20=");
@@ -17,7 +17,7 @@ int main()
 			std::string expr6("1-2*9=");
 			std::string expr7("1+9*6-4/3=");
 			std::string expr8("1+2-1/10*(-20)+3^4*5+4+5+6+7*2=");
-			double resExpr1 = 1 + 2;
+			double resExpr1 = 1 + (-2);
 			double resExpr2 = (double)1 / 9;
 			double resExpr3 = 1 - 400;
 			double resExpr4 = 1 * 20;
